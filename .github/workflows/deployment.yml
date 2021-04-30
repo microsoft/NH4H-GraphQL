@@ -13,16 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ env.NODE_VERSION }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-      
-    - name: 'Deploy to Web'
+          
+    - name: 'Stage files'
       run: |
         git clone "$GITURL"
         rsync -av . ./nh4hgrap --exclude nh4hgrap --exclude .github
+    - name: 'Deploy to Web'
+      run: |
         cd nh4hgrap
+        pwd
         git config user.email "gh@auto.com"
         git config user.name "GitHub Action"
         git add .
