@@ -17,7 +17,7 @@ jobs:
     - name: 'Stage files'
       run: |
         git clone "$GITURL"
-        rsync -av . ./nh4hgrap --exclude nh4hgrap --exclude .github
+        rsync -av . ./nh4hgrap --exclude nh4hgrap --exclude .github --exclude .git
     - name: 'Deploy to Web'
       run: |
         cd nh4hgrap
