@@ -43,8 +43,8 @@ const server = new ApolloServer(
     { typeDefs, 
          dataSources: () => ({ hackapibackend :new HackAPIBackend()     }),
         resolvers,
-        introspection: true,
-        playground: true, 
+        introspection: process.env.introspection,
+        playground: process.env.playground, 
     });
 
 exports.graphqlHandler = server.createHandler({
