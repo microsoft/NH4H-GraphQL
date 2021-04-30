@@ -4,7 +4,7 @@ on:
     branches:
       - main
 env:
-  GITURL: ${{ secrets.APP_SVC_GIT_URL }}
+  GITURL: ${{ secrets.GITURL }}
   MESSAGE: ${{ github.event.head_commit.message }}
 
 jobs:
