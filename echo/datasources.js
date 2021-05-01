@@ -32,11 +32,20 @@ class HackAPIBackend extends RESTDataSource {
    
     return res;
   }
+
+  
+
   async getTeams(){
-    let res=await this.get('/solutions/');
-    console.log(res);
+    let teams=await this.get('/solutions/');
+    return teams;
+  }
+
+  async getTeamUsers({teamId}){
+    let res=await this.get('solutions/hackers/'+teamId);
     return res;
   }
+
+ 
   
  
   

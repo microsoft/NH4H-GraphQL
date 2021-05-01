@@ -1,30 +1,13 @@
 
 const { ApolloServer, gql } = require('apollo-server-azure-functions');
-const typeDefs = 
-gql`
- type User {
-     userId: ID
-     userRole: String
-     userRegEmail: String
-     userMSTeamsEmail:String 
-     gitHubId: Int
- }
- type Team{
-    teamId: ID
-    teamName: String
- }
- type Query {
-    hello: String
-    getUserByRegEmail(regemail:String):User
-    getUserByTeamsEmail(teamsemail:String):User
-    getAllTeams:[Team]
-}
+const typeDefs = require('./schema');
 
-`;
+
 const HackAPIBackend = require('./datasources');
 
 
-const resolvers = {
+const resolvers = 
+{
   Query: {
     hello: () => 'Hello world!',
     getUserByRegEmail:(_,{regemail},{dataSources})=>{
@@ -32,10 +15,15 @@ const resolvers = {
     getUserByTeamsEmail:(_,{teamsemail},{dataSources})=>{
      return dataSources.hackapibackend.findByTeams({teamsemail:teamsemail})},
      getAllTeams:(_,{},{dataSources})=>{
-      return dataSources.hackapibackend.getTeams()}
-    
-    
-  }
+      return dataSources.hackapibackend.getTeams()
+      }
+     },
+  Team: {
+        Users: (team,{},{dataSources}) => {
+          return dataSources.hackapibackend.getTeamUsers({teamId:team.teamId});
+        }
+      }
+  
   };
 
 const server = new ApolloServer(
