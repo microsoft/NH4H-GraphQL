@@ -1,10 +1,15 @@
 const { ApolloServer, gql } = require('apollo-server-azure-functions');
 const typeDefs=
 gql`
+type UserExpanded {
+    name: String
+    islead: Int
+}
 type User {
     teamId: ID
     teamName: String
     userID: [Int]
+    hackers:[UserExpanded]
 }
 type Hacker {
     userId: ID
