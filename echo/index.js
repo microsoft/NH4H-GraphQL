@@ -2,25 +2,23 @@
 const { ApolloServer, gql } = require('apollo-server-azure-functions');
 const typeDefs = require('./schema');
 
-
 const HackAPIBackend = require('./datasources');
-
 
 const resolvers = 
 {
   Query: {
     hello: () => 'Hello world!',
-    getUserByRegEmail:(_,{regemail},{dataSources})=>{
-        return dataSources.hackapibackend.findByRegemail({regemail:regemail})},
-    getUserByTeamsEmail:(_,{teamsemail},{dataSources})=>{
-     return dataSources.hackapibackend.findByTeams({teamsemail:teamsemail})},
-     getAllTeams:(_,{},{dataSources})=>{
-      return dataSources.hackapibackend.getTeams()
+    getUserByRegEmail:(_,{regemail},{hackAPI})=>{
+        return hackAPI.findByRegemail({regemail:regemail})},
+    getUserByTeamsEmail:(_,{teamsemail},{hackAPI})=>{
+     return hackAPI.findByTeams({teamsemail:teamsemail})},
+     getAllTeams:(_,{},{hackAPI})=>{
+      return hackAPI.getTeams()
       }
      },
   Team: {
-        Users: (team,{},{dataSources}) => {
-          return dataSources.hackapibackend.getTeamUsers({teamId:team.teamId});
+        Users: (team,{},{hackAPI}) => {
+          return hackAPI.getTeamUsers({teamId:team.teamId});
         }
       }
   
@@ -29,10 +27,15 @@ const resolvers =
 const server = new ApolloServer(
     
     { typeDefs, 
-         dataSources: () => ({ hackapibackend :new HackAPIBackend()     }),
+         //dataSources: () => ({ hackapibackend :new HackAPIBackend()     }),
         resolvers,
-        introspection: false,
-        playground: false, 
+        context: (req) => {
+          return {
+            hackAPI: new HackAPIBackend(req.context.bindings.req.headers.authorization)
+          }
+        },
+        introspection: true,
+        playground: true, 
     });
 
 exports.graphqlHandler = server.createHandler({

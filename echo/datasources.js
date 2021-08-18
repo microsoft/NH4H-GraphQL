@@ -1,21 +1,20 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
 
-const { v4: uuidv4  } =require('uuid');
-
-
-
 class HackAPIBackend extends RESTDataSource {
-  constructor() {
+  
+  constructor(authHeader) {
     super();
-    this.baseURL='https://hackapi-v2.azurewebsites.net/api';  
-    this.secret=process.env.ClientTeamEmbed;
+    this.baseURL=process.env.HackAPI;
+    this.secret=authHeader;
+    this.initialize({});
    }
    
    willSendRequest(request) {
-    request.headers.set('ClientTeamEmbed', this.secret);
+    request.headers.set('Authorization', this.secret);
     request.headers.set( 'Content-Type','application/json');
    }
-  async findByTeams({teamsemail}){
+
+   async findByTeams({teamsemail}){
     let body={
       UserMSTeamsEmail:teamsemail
     };
@@ -23,6 +22,7 @@ class HackAPIBackend extends RESTDataSource {
     
     return res;
   }
+
   async findByRegemail({regemail}){
     let body={
       userRegEmail: regemail
@@ -33,8 +33,6 @@ class HackAPIBackend extends RESTDataSource {
     return res;
   }
 
-  
-
   async getTeams(){
     let teams=await this.get('/solutions/');
     return teams;
@@ -44,11 +42,6 @@ class HackAPIBackend extends RESTDataSource {
     let res=await this.get('solutions/hackers/'+teamId);
     return res;
   }
-
- 
-  
- 
-  
  
 }
 module.exports = HackAPIBackend;
