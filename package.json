@@ -1,7 +1,7 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
+  "name": "nh4h-graphql",
+  "version": "1.0.0",
+  "description": "GraphQL inteface to HackAPI",
   "scripts": {
     "test": "echo \"No tests yet...\""
   },
@@ -16,5 +16,5 @@
     "graphql": "^15.5.0",
     "uuid": "^8.3.2"
   },
-  "author": ""
+  "author": "hlsemerging@microsoft.com"
 }
