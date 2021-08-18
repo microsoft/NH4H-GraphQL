@@ -34,8 +34,8 @@ const server = new ApolloServer(
             hackAPI: new HackAPIBackend(req.context.bindings.req.headers.authorization)
           }
         },
-        introspection: true,
-        playground: true, 
+        introspection: false,
+        playground: false, 
     });
 
 exports.graphqlHandler = server.createHandler({
