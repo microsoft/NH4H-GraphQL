@@ -1,5 +1,6 @@
 
 const { ApolloServer, gql } = require('apollo-server-azure-functions');
+const { AuthenticationError } = require('apollo-server-errors');
 const typeDefs = require('./schema');
 
 const HackAPIBackend = require('./datasources');
@@ -30,8 +31,11 @@ const server = new ApolloServer(
          //dataSources: () => ({ hackapibackend :new HackAPIBackend()     }),
         resolvers,
         context: (req) => {
+          const authHeader = req.context.bindings.req.headers.authorization || '';
+
+          if (authHeader === '') throw new AuthenticationError('please send Bearer token with request');
           return {
-            hackAPI: new HackAPIBackend(req.context.bindings.req.headers.authorization)
+            hackAPI: new HackAPIBackend(authHeader)
           }
         },
         introspection: (process.env.NODE_ENV !== 'production'),
