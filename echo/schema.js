@@ -55,12 +55,18 @@ type Team{
     teamId: Int
     teamName: String
 }
+type Challenge{
+    id: ID
+    name: String
+    description: String
+}
 
 type Query {
    hello: String
    getUserByRegEmail(regemail:String):Hacker
    getUserByTeamsEmail(teamsemail:String):Hacker
    getAllTeams:[Team]
+   getChallenges:[Challenge]
 }
 `;
 module.exports = typeDefs;;

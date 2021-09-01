@@ -9,6 +9,9 @@ const resolvers =
 {
   Query: {
     hello: () => 'Hello world!',
+    getChallenges:(_,{},{hackAPI})=>{
+      return hackAPI.getChallenges()
+    },
     getUserByRegEmail:(_,{regemail},{hackAPI})=>{
         return hackAPI.findByRegemail({regemail:regemail})},
     getUserByTeamsEmail:(_,{teamsemail},{hackAPI})=>{
