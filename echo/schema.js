@@ -57,6 +57,7 @@ type Team{
 }
 type Challenge{
     id: ID
+    track: String
     name: String
     description: String
 }
