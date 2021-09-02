@@ -45,18 +45,19 @@ class HackAPIBackend extends RESTDataSource {
 
   getChallenges(){
     //TODO Get from hackapi
-    let Challenge = function(id, name, desc) {
+    let Challenge = function(id, track, name, desc) {
       this.id = id;
+      this.track = track;
       this.name = name;
       this.description = desc;
   };
     let teams= [
-      new Challenge(1,'Track 0 - Mental Health','Nurses need to recover from COVID'),
-      new Challenge(2,"Track 1 - Education","Track 3 - Health Equity & Racial Disparities"),
-      new Challenge(3,"Track 2 - MedicalDeserts","Medical Deserts Areas without healthcare services"),
-      new Challenge(4,"Track 2 - MedicalDeserts","Medical Deserts Areas without healthcare services"),
-      new Challenge(5,"Track 3 - Equity","Equity in Healthcare is a problem"),
-      new Challenge(6,"Track 5 - Open","Solve any problem you have")
+      new Challenge(1, 'Track 0', 'Track 0 - Mental Health','Nurses need to recover from COVID'),
+      new Challenge(2, 'Track 1', 'Track 1 - Education', 'Vaccine Education & Delivery'),
+      new Challenge(3, 'Track 2', 'Track 2 - Medical Deserts', 'Medical Deserts'),
+      new Challenge(4, 'Track 3', 'Track 3 - Equity', 'Health Equity & Racial Disparities'),
+      new Challenge(5, 'Track 4', 'Track 4 - Care', 'New Models and Settings for Care'),
+      new Challenge(6, 'Track 5', 'Track 5 - Open', 'Open Topic')
     ];
     return teams;
   }
