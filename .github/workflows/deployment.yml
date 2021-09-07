@@ -10,35 +10,41 @@ env:
   NODE_VERSION: '14.x'                     # set this to the node version to use (supports 8.x, 10.x, 12.x)
 
 jobs:
-  # provision:
-  #   name: Provision Azure Resources
-  #   runs-on: ubuntu-latest    
-  #   outputs:
-  #     azure-function-name: ${{ steps.deploy-bicep.outputs.functionAppName }}
-  #   steps:                
-  #   - name: Azure Login
-  #     uses: azure/login@v1
-  #     with:
-  #       creds: ${{ secrets.AZURE_CREDENTIALS  }}
+  provision:
+    name: Provision Azure Resources
+    runs-on: ubuntu-latest    
+    outputs:
+      azure-function-name: ${{ steps.deploy-bicep.outputs.functionAppName }}
+    steps:                
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS  }}
     
-  #   # Checkout
-  #   - name: Checkout
-  #     uses: actions/checkout@v1
+    # Checkout
+    - name: Checkout
+      uses: actions/checkout@v1
         
-  #   # Deployment of template    
-  #   - name: Deploy BICEP Template
-  #     id: deploy-bicep
-  #     uses: azure/arm-deploy@v1
-  #     with:
-  #       subscriptionId: ${{ env.AZURE_SUBSCRIPTION_ID }}
-  #       resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
-  #       template: ./deploy/function.bicep  # Set this to the location of your template file
+    # Deployment of template    
+    - name: Deploy BICEP Template
+      id: deploy-bicep
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ env.AZURE_SUBSCRIPTION_ID }}
+        resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
+        template: ./deploy/function.bicep  # Set this to the location of your template file
 
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: dev
-    # needs: provision
+    needs: 
+      provision
     steps:
+    - name: debug
+      shell: bash
+      run: |
+      echo '${{ needs.provision.outputs.azure-function-name }}'
+
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
       with:
