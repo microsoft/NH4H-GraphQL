@@ -43,7 +43,7 @@ jobs:
     - name: debug
       shell: bash
       run: |
-      echo '${{ needs.provision.outputs.azure-function-name }}'
+        echo '${{ needs.provision.outputs.azure-function-name }}'
 
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
