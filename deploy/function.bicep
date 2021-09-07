@@ -31,10 +31,11 @@ resource functionapp 'Microsoft.Web/sites@2021-01-15' = {
   name: Name
   location: Location
   kind: 'functionapp,linux'
-  properties:{
+  properties: {
+    reserved: true
     serverFarmId: funcappserviceplan.id
     siteConfig:{
-      linuxFxVersion: 'NODE|14'
+      linuxFxVersion: 'Node|14'
       appSettings:[
         {
           name: 'HackAPI'
@@ -43,8 +44,6 @@ resource functionapp 'Microsoft.Web/sites@2021-01-15' = {
         {
           name: 'AzureWebJobsStorage'
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
-          
-          
         }
       ]
     }
