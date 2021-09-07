@@ -37,7 +37,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: dev
-    needs: provision
+    # needs: provision
     steps:
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
