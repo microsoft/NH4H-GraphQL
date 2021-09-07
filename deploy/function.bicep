@@ -51,4 +51,4 @@ resource functionapp 'Microsoft.Web/sites@2021-01-15' = {
   }
 }
 
-output functionAppName string = Name
+output functionAppName string = functionapp.name

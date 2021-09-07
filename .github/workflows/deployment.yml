@@ -39,6 +39,11 @@ jobs:
     environment: dev
     needs: provision
     steps:
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
 
