@@ -40,7 +40,7 @@ jobs:
     needs: 
       provision
     env:
-      AZURE_FUNCTION_NAME: ${{ needs.provision.outputs.azure-function-name }}
+      AZURE_FUNCTION_NAME: 'NH4H-Graphql-5znbufj6wxxxy'
     steps:
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
