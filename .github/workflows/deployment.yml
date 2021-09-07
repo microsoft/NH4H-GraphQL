@@ -4,14 +4,40 @@ on:
     branches:
       - main
 env:
-  AZURE_FUNCTIONAPP_NAME: nh4hgrap    # set this to your application's name
+  AZURE_SUBSCRIPTION_ID: '1c642d88-5042-4d19-9d49-49be6612a40f'
+  AZURE_RESOURCE_GROUP: 'rg-grapphql-phun'
   AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '14.x'                     # set this to the node version to use (supports 8.x, 10.x, 12.x)
 
 jobs:
+  provision:
+    name: Provision Azure Resources
+    runs-on: ubuntu-latest    
+    outputs:
+      azure-function-name: ${{ steps.deploy-bicep.outputs.functionAppName }}
+    steps:                
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS  }}
+    
+    # Checkout
+    - name: Checkout
+      uses: actions/checkout@v1
+        
+    # Deployment of template    
+    - name: Deploy BICEP Template
+      id: deploy-bicep
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ env.AZURE_SUBSCRIPTION_ID }}
+        resourceGroupName: ${{ env.AZURE_RESOURCE_GROUP }}
+        template: ./deploy/function.bicep  # Set this to the location of your template file
+
   build-and-deploy:
     runs-on: ubuntu-latest
     environment: dev
+    needs: provision
     steps:
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@master
@@ -33,6 +59,6 @@ jobs:
       uses: Azure/functions-action@v1.3.2
       id: fa
       with:
-        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        app-name: ${{ needs.provison.outputs.azure-function-name }}
         package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-        publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+        #publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}

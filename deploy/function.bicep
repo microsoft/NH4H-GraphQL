@@ -2,7 +2,20 @@ param Name string = 'NH4H-Graphql-${uniqueString(resourceGroup().id)}'
 param Location string = resourceGroup().location
 param APIURL string = 'https://n'
 
-resource funcappserviceplan 'Microsoft.Web/serverfarms@2021-01-15'={
+var storageAccountName = '${uniqueString(resourceGroup().id)}storage'
+
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
+  name: storageAccountName
+  location: Location
+  kind: 'StorageV2'
+  sku: {
+    name: 'Standard_LRS'
+  }
+  
+}
+
+resource funcappserviceplan 'Microsoft.Web/serverfarms@2021-01-15' = {
   name: '${Name}-sp'
   location: Location
   sku: {
@@ -38,12 +51,4 @@ resource functionapp 'Microsoft.Web/sites@2021-01-15' = {
   }
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' ={
-  name: '${Name}sa'
-  location: Location
-  kind: 'StorageV2'
-  sku: {
-    name: 'Standard_LRS'
-  }
-  
-}
+output functionAppName string = Name
