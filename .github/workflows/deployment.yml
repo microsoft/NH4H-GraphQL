@@ -40,11 +40,6 @@ jobs:
     needs: 
       provision
     steps:
-    - name: debug
-      shell: bash
-      run: |
-        echo '${{ needs.provision.outputs.azure-function-name }}'
-
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
       with:
@@ -66,11 +61,10 @@ jobs:
         npm run build --if-present
         npm run test --if-present
         popd
+
     - name: 'Run Azure Functions Action'
-      uses: Azure/functions-action@v1.3.2
+      uses: Azure/functions-action@v1
       id: fa
       with:
-        app-name: 'demophunc'
-        # app-name: ${{ needs.provision.outputs.azure-function-name }}
+        app-name: ${{ needs.provision.outputs.azure-function-name }}
         package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-        # publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
