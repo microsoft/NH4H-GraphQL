@@ -1,6 +1,6 @@
 param Name string = 'NH4H-Graphql-${uniqueString(resourceGroup().id)}'
 param Location string = resourceGroup().location
-param APIURL string = 'https://n'
+param APIURL string = 'https://hackapi-tax6y5voqibmw.azurewebsites.net'
 
 var storageAccountName = '${uniqueString(resourceGroup().id)}storage'
 
