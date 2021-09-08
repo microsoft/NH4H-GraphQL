@@ -35,6 +35,7 @@ resource functionapp 'Microsoft.Web/sites@2021-01-15' = {
     reserved: true
     serverFarmId: funcappserviceplan.id
     siteConfig:{
+      
       linuxFxVersion: 'Node|14'
       appSettings:[
         {
@@ -44,6 +45,10 @@ resource functionapp 'Microsoft.Web/sites@2021-01-15' = {
         {
           name: 'AzureWebJobsStorage'
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccount.name};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value}'
+        }
+        {
+          name: 'FUNCTIONS_EXTENSION_VERSION'
+          value: '~3'
         }
       ]
     }
