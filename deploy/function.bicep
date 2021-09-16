@@ -3,7 +3,7 @@ param Location string = resourceGroup().location
 param APIURL string = 'https://hackapi-tax6y5voqibmw.azurewebsites.net'
 
 var storageAccountName = '${uniqueString(resourceGroup().id)}storage'
-
+var teamAppUrlCors = 'https://hackathonteambuifee948ef.z13.web.${environment().suffixes.storage}'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' = {
   name: storageAccountName
@@ -34,8 +34,13 @@ resource functionapp 'Microsoft.Web/sites@2021-01-15' = {
   properties: {
     reserved: true
     serverFarmId: funcappserviceplan.id
+    
     siteConfig:{
-      
+      cors: {
+        allowedOrigins: [
+          teamAppUrlCors
+        ]
+      }
       linuxFxVersion: 'Node|14'
       appSettings:[
         {
