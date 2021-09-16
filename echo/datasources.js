@@ -18,7 +18,7 @@ class HackAPIBackend extends RESTDataSource {
     let body={
       UserMSTeamsEmail:teamsemail
     };
-    let res=await this.post('/users/msemail',body);
+    let res=await this.post('/api/users/msemail',body);
     
     return res;
   }
@@ -27,19 +27,19 @@ class HackAPIBackend extends RESTDataSource {
     let body={
       userRegEmail: regemail
     };
-    let res= await this.post('/users/regemail',body);
+    let res= await this.post('/api/users/regemail',body);
    console.log(res);
    
     return res;
   }
 
   async getTeams(){
-    let teams=await this.get('/solutions/');
+    let teams=await this.get('/api/solutions');
     return teams;
   }
 
   async getTeamUsers({teamId}){
-    let res=await this.get('solutions/hackers/'+teamId);
+    let res=await this.get('/api/solutions/hackers/'+teamId);
     return res;
   }
 
