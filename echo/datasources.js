@@ -4,7 +4,7 @@ class HackAPIBackend extends RESTDataSource {
   
   constructor(authHeader) {
     super();
-    this.baseURL=process.env.HackAPI;
+    this.baseURL='https://hackapi-tax6y5voqibmw.azurewebsites.net';
     this.secret=authHeader;
     this.initialize({});
    }
