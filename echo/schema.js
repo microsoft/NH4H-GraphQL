@@ -48,7 +48,8 @@ type Team{
     msLabSPNKey: String
     msLabSPNObjectId: String
     msLabTenantName: String
-    msTeamsChannel: String
+    msTeamsChannelName: String
+    msTeamsChannelUrl: String
     skillsWanted: String
     Users:User
     teamDescription: String
