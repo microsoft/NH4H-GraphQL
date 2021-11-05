@@ -52,9 +52,9 @@ class HackAPIBackend extends RESTDataSource {
       this.description = desc;
   };
     let teams= [
-      new Challenge(1, 'Trk1', 'Track 1: Fostering and Attracting a Diverse & Empowered Workforce', 'Diversity and Inclusion'),
-      new Challenge(2, 'Trk2', 'Track 2: Building Competencies & Optimizing Scope of Practice', 'Building Competencies & Optimizing Scope of Practice'),
-      new Challenge(3, 'Trk3', 'Track 3: Driving Administrative Efficiency in Care Delivery', 'Administrative Efficiency'),
+      new Challenge(1, 'Trk1', 'Track 1: Diversity in Practice and Care', 'Attracting & fostering a diverse, empowered workforce that serves the needs of an evolving patient population'),
+      new Challenge(2, 'Trk2', 'Track 2: Education, Upskilling, Professional Development', 'Addressing needs to improve competence and confidence in practice'),
+      new Challenge(3, 'Trk3', 'Track 3: Driving Administrative Efficiency in Nurse-led Care Delivery', 'Streamline and optimize non-clinical tasks that allow nurses the opportunity for top of license practice'),
       new Challenge(4, 'Trk4', 'Track 4: Open Track', 'Open Track'),
     ];
     return teams;
