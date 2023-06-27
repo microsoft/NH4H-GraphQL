@@ -41,7 +41,7 @@ resource functionapp 'Microsoft.Web/sites@2021-01-15' = {
           teamAppUrlCors
         ]
       }
-      linuxFxVersion: 'Node|14'
+      linuxFxVersion: 'Node|16'
       appSettings:[
         {
           name: 'HackAPI'
